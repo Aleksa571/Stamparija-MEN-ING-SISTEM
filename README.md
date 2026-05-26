@@ -67,9 +67,19 @@ Sajt omogućava:
 ### Preduslovi
 - **Java JDK 17+** (testirano sa JDK 21)
 - **Node.js 18+** (testirano sa Node 22)
-- Opcionalno: **MySQL 8** (ako se koristi `prod` profil)
+- **XAMPP / WAMP / MySQL** (default profil je `prod` - koristi MySQL)
 
-### 1) Backend
+### 1) Baza podataka (phpMyAdmin)
+
+1. Pokrenite XAMPP/WAMP i startujte **Apache + MySQL**
+2. Otvorite **http://localhost/phpmyadmin**
+3. Kliknite na karticu **SQL**
+4. Otvorite fajl `database/stamparija_db.sql` i kopirajte ceo sadržaj
+5. Nalepite u SQL editor i kliknite **Go / Izvrši**
+
+Skripta automatski kreira bazu `stamparija_db`, sve tabele i ubacuje početne podatke (2 korisnika, 6 kategorija, 13 proizvoda, 3 blog objave, 1 probnu porudžbinu).
+
+### 2) Backend
 
 ```bash
 cd backend
@@ -77,19 +87,19 @@ cd backend
 ./mvnw spring-boot:run        # Linux/Mac
 ```
 
-Backend se podiže na **http://localhost:8080**. Po default-u koristi **H2** in-memory bazu (`dev` profil), pa nije potrebno instalirati MySQL.
+Backend se podiže na **http://localhost:8080** (default profil je `prod` koji koristi MySQL).
 
-**H2 konzola** dostupna na: http://localhost:8080/h2-console (JDBC URL: `jdbc:h2:mem:stamparija`)
-
-Za MySQL profil:
+**Alternativa za development bez MySQL-a** (H2 in-memory baza):
 
 ```bash
-.\mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=prod
+.\mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
-Konfiguracija MySQL-a je u `backend/src/main/resources/application-prod.properties`.
+H2 konzola: http://localhost:8080/h2-console (JDBC URL: `jdbc:h2:mem:stamparija`)
 
-### 2) Frontend
+Konfiguracije baze su u `backend/src/main/resources/application-prod.properties` (MySQL) i `application-dev.properties` (H2).
+
+### 3) Frontend
 
 ```bash
 cd frontend
