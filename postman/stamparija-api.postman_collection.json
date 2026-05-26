@@ -1,0 +1,514 @@
+{
+  "info": {
+    "_postman_id": "stamparija-meningsistem-collection",
+    "name": "Stamparija MEN-ING SISTEM - REST API",
+    "description": "Postman kolekcija za RESTful API stamparije MEN-ING SISTEM DOO (Zavrsni projekat - Internet softverske arhitekture).\n\n**Test nalozi:**\n- Admin: `admin` / `admin123`\n- Kupac: `kupac` / `kupac123`\n\n**Kako koristiti:**\n1. Pokrenite backend na http://localhost:8080\n2. Izvrsite `Auth -> Login (Admin)` - token se automatski cuva u kolekciji\n3. Sve ostale zahteve mozete normalno koristiti, token se salje automatski",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8080", "type": "string" },
+    { "key": "access_token", "value": "", "type": "string" },
+    { "key": "refresh_token", "value": "", "type": "string" }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{access_token}}", "type": "string" }]
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login (Admin)",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "if (pm.response.code === 200) {",
+                "  const data = pm.response.json();",
+                "  pm.collectionVariables.set('access_token', data.accessToken);",
+                "  pm.collectionVariables.set('refresh_token', data.refreshToken);",
+                "  console.log('Tokeni sacuvani u kolekciji.');",
+                "}"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/auth/login", "host": ["{{base_url}}"], "path": ["api", "auth", "login"] }
+          },
+          "response": [{
+            "name": "200 OK",
+            "originalRequest": {
+              "method": "POST",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": { "mode": "raw", "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}" },
+              "url": { "raw": "{{base_url}}/api/auth/login", "host": ["{{base_url}}"], "path": ["api","auth","login"] }
+            },
+            "status": "OK",
+            "code": 200,
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": "{\n  \"accessToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjoiUk9MRV9BRE1JTixST0xFX1VTRVIiLCJpYXQiOjE3Nzk3OTgwMDAsImV4cCI6MTc3OTc5ODkwMH0.SIGNATURE\",\n  \"refreshToken\": \"08003bbb-ef1c-41a0-b41a-1fe09a9ea59d-856fb674-f061-4efc-ab1a-2b38d1c564ad\",\n  \"tokenType\": \"Bearer\",\n  \"userId\": 1,\n  \"username\": \"admin\",\n  \"email\": \"admin@meningsistem.rs\",\n  \"firstName\": \"Vlasnik\",\n  \"lastName\": \"Stamparije\",\n  \"roles\": [\"ROLE_ADMIN\", \"ROLE_USER\"]\n}"
+          }]
+        },
+        {
+          "name": "Login (Kupac)",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "if (pm.response.code === 200) {",
+                "  const data = pm.response.json();",
+                "  pm.collectionVariables.set('access_token', data.accessToken);",
+                "  pm.collectionVariables.set('refresh_token', data.refreshToken);",
+                "}"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"username\": \"kupac\",\n  \"password\": \"kupac123\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/login", "host": ["{{base_url}}"], "path": ["api","auth","login"] }
+          }
+        },
+        {
+          "name": "Register",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"novi_kupac\",\n  \"email\": \"novi@example.com\",\n  \"password\": \"sifra123\",\n  \"firstName\": \"Marko\",\n  \"lastName\": \"Markovic\",\n  \"phone\": \"064/555-1234\",\n  \"address\": \"Knez Mihailova 1, Beograd\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/api/auth/register", "host": ["{{base_url}}"], "path": ["api","auth","register"] }
+          },
+          "response": [{
+            "name": "200 OK",
+            "originalRequest": {
+              "method": "POST",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": { "mode": "raw", "raw": "{\"username\":\"novi_kupac\",\"email\":\"novi@example.com\",\"password\":\"sifra123\",\"firstName\":\"Marko\",\"lastName\":\"Markovic\",\"phone\":\"064/555-1234\",\"address\":\"Knez Mihailova 1, Beograd\"}" },
+              "url": { "raw": "{{base_url}}/api/auth/register", "host": ["{{base_url}}"], "path": ["api","auth","register"] }
+            },
+            "status": "OK",
+            "code": 200,
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": "{\n  \"accessToken\": \"eyJ...\",\n  \"refreshToken\": \"uuid-uuid\",\n  \"tokenType\": \"Bearer\",\n  \"userId\": 3,\n  \"username\": \"novi_kupac\",\n  \"email\": \"novi@example.com\",\n  \"firstName\": \"Marko\",\n  \"lastName\": \"Markovic\",\n  \"roles\": [\"ROLE_USER\"]\n}"
+          }]
+        },
+        {
+          "name": "Refresh Token",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "if (pm.response.code === 200) {",
+                "  const data = pm.response.json();",
+                "  pm.collectionVariables.set('access_token', data.accessToken);",
+                "  pm.collectionVariables.set('refresh_token', data.refreshToken);",
+                "}"
+              ],
+              "type": "text/javascript"
+            }
+          }],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refresh_token}}\"\n}" },
+            "url": { "raw": "{{base_url}}/api/auth/refresh", "host": ["{{base_url}}"], "path": ["api","auth","refresh"] }
+          },
+          "response": [{
+            "name": "200 OK",
+            "originalRequest": {
+              "method": "POST",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": { "mode": "raw", "raw": "{\"refreshToken\":\"08003bbb-ef1c-41a0-b41a-1fe09a9ea59d-856fb674\"}" },
+              "url": { "raw": "{{base_url}}/api/auth/refresh", "host": ["{{base_url}}"], "path": ["api","auth","refresh"] }
+            },
+            "status": "OK",
+            "code": 200,
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": "{\n  \"accessToken\": \"novi-jwt-token\",\n  \"refreshToken\": \"novi-refresh-token\",\n  \"tokenType\": \"Bearer\",\n  \"userId\": 1,\n  \"username\": \"admin\",\n  \"email\": \"admin@meningsistem.rs\",\n  \"firstName\": \"Vlasnik\",\n  \"lastName\": \"Stamparije\",\n  \"roles\": [\"ROLE_ADMIN\", \"ROLE_USER\"]\n}"
+          }]
+        },
+        {
+          "name": "Me (current user)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/auth/me", "host": ["{{base_url}}"], "path": ["api","auth","me"] }
+          },
+          "response": [{
+            "name": "200 OK",
+            "originalRequest": {
+              "method": "GET",
+              "url": { "raw": "{{base_url}}/api/auth/me", "host": ["{{base_url}}"], "path": ["api","auth","me"] }
+            },
+            "status": "OK",
+            "code": 200,
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": "{\n  \"id\": 1,\n  \"username\": \"admin\",\n  \"email\": \"admin@meningsistem.rs\",\n  \"firstName\": \"Vlasnik\",\n  \"lastName\": \"Stamparije\",\n  \"phone\": \"026/123-456\",\n  \"address\": \"Smederevo\",\n  \"createdAt\": \"2026-05-26T13:44:34.789\",\n  \"enabled\": true,\n  \"roles\": [\"ROLE_ADMIN\", \"ROLE_USER\"]\n}"
+          }]
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "url": { "raw": "{{base_url}}/api/auth/logout", "host": ["{{base_url}}"], "path": ["api","auth","logout"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "GET All Categories (PUBLIC)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/categories", "host": ["{{base_url}}"], "path": ["api","categories"] }
+          },
+          "response": [{
+            "name": "200 OK",
+            "originalRequest": {
+              "method": "GET",
+              "url": { "raw": "{{base_url}}/api/categories", "host": ["{{base_url}}"], "path": ["api","categories"] }
+            },
+            "status": "OK",
+            "code": 200,
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": "[\n  {\"id\":1,\"name\":\"Kutije za roštilj\",\"description\":\"Kartonske kutije sa štampom...\",\"imageUrl\":\"/uploads/IMG_1062.JPG\",\"productCount\":2},\n  {\"id\":2,\"name\":\"Kutije za pomfrit i hranu\",\"description\":\"Praktične srebrne kutije...\",\"imageUrl\":\"/uploads/IMG_1064.JPG\",\"productCount\":2},\n  {\"id\":3,\"name\":\"Kutije za kolače\",\"description\":\"Bele kutije za kolače sa providnim prozorom...\",\"imageUrl\":\"/uploads/IMG_1065.JPG\",\"productCount\":3},\n  {\"id\":4,\"name\":\"Podmetači za piće\",\"description\":\"Papirni i kartonski podmetači...\",\"imageUrl\":\"/uploads/IMG_1065.JPG\",\"productCount\":1},\n  {\"id\":5,\"name\":\"Kalendari\",\"description\":\"Zidni i stoni kalendari...\",\"imageUrl\":\"/uploads/IMG_1065.JPG\",\"productCount\":2},\n  {\"id\":6,\"name\":\"Blokovska roba\",\"description\":\"Otpremnice, računi, reversi...\",\"imageUrl\":\"/uploads/IMG_1066.JPG\",\"productCount\":3}\n]"
+          }]
+        },
+        {
+          "name": "GET Category by ID",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/categories/1", "host": ["{{base_url}}"], "path": ["api","categories","1"] }
+          },
+          "response": [{
+            "name": "200 OK",
+            "originalRequest": {
+              "method": "GET",
+              "url": { "raw": "{{base_url}}/api/categories/1", "host": ["{{base_url}}"], "path": ["api","categories","1"] }
+            },
+            "status": "OK",
+            "code": 200,
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": "{\n  \"id\": 1,\n  \"name\": \"Kutije za roštilj\",\n  \"description\": \"Kartonske kutije sa štampom za pakovanje pečenog mesa i roštilja.\",\n  \"imageUrl\": \"/uploads/IMG_1062.JPG\",\n  \"productCount\": 2\n}"
+          }]
+        },
+        {
+          "name": "CREATE Category (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Posebne porudzbine\",\n  \"description\": \"Custom kartonska ambalaza po meri klijenta.\",\n  \"imageUrl\": \"/uploads/IMG_1070.JPG\"\n}" },
+            "url": { "raw": "{{base_url}}/api/categories", "host": ["{{base_url}}"], "path": ["api","categories"] }
+          },
+          "response": [{
+            "name": "201 Created",
+            "originalRequest": {
+              "method": "POST",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": { "mode": "raw", "raw": "{\"name\":\"Posebne porudzbine\",\"description\":\"Custom...\",\"imageUrl\":\"/uploads/IMG_1070.JPG\"}" },
+              "url": { "raw": "{{base_url}}/api/categories", "host": ["{{base_url}}"], "path": ["api","categories"] }
+            },
+            "status": "Created",
+            "code": 201,
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": "{\n  \"id\": 7,\n  \"name\": \"Posebne porudzbine\",\n  \"description\": \"Custom kartonska ambalaza po meri klijenta.\",\n  \"imageUrl\": \"/uploads/IMG_1070.JPG\",\n  \"productCount\": 0\n}"
+          }]
+        },
+        {
+          "name": "UPDATE Category (ADMIN)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Kutije za roštilj - nova kolekcija\",\n  \"description\": \"Sezonska linija sa motivima leta.\",\n  \"imageUrl\": \"/uploads/IMG_1062.JPG\"\n}" },
+            "url": { "raw": "{{base_url}}/api/categories/1", "host": ["{{base_url}}"], "path": ["api","categories","1"] }
+          }
+        },
+        {
+          "name": "DELETE Category (ADMIN)",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/api/categories/7", "host": ["{{base_url}}"], "path": ["api","categories","7"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "GET All Products (PUBLIC)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/products", "host": ["{{base_url}}"], "path": ["api","products"] }
+          },
+          "response": [{
+            "name": "200 OK",
+            "originalRequest": {
+              "method": "GET",
+              "url": { "raw": "{{base_url}}/api/products", "host": ["{{base_url}}"], "path": ["api","products"] }
+            },
+            "status": "OK",
+            "code": 200,
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": "[\n  {\"id\":1,\"name\":\"Kartonska kutija za roštilj - velika (Jonas)\",\"description\":\"Štampana kartonska kutija...\",\"price\":45.00,\"dimensions\":\"30x20x5cm\",\"imageUrl\":\"/uploads/IMG_1062.JPG\",\"stock\":500,\"available\":true,\"categoryId\":1,\"categoryName\":\"Kutije za roštilj\"},\n  {\"id\":2,\"name\":\"Kartonska kutija za roštilj - srednja\",\"price\":35.00,\"stock\":800,\"available\":true,\"categoryId\":1,\"categoryName\":\"Kutije za roštilj\"}\n]"
+          }]
+        },
+        {
+          "name": "GET Products by Category",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/products?categoryId=1",
+              "host": ["{{base_url}}"], "path": ["api","products"],
+              "query": [{ "key": "categoryId", "value": "1" }]
+            }
+          }
+        },
+        {
+          "name": "SEARCH Products",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/products?search=kutija",
+              "host": ["{{base_url}}"], "path": ["api","products"],
+              "query": [{ "key": "search", "value": "kutija" }]
+            }
+          }
+        },
+        {
+          "name": "GET Product by ID",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/products/1", "host": ["{{base_url}}"], "path": ["api","products","1"] }
+          },
+          "response": [{
+            "name": "200 OK",
+            "originalRequest": {
+              "method": "GET",
+              "url": { "raw": "{{base_url}}/api/products/1", "host": ["{{base_url}}"], "path": ["api","products","1"] }
+            },
+            "status": "OK",
+            "code": 200,
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": "{\n  \"id\": 1,\n  \"name\": \"Kartonska kutija za roštilj - velika (Jonas)\",\n  \"description\": \"Štampana kartonska kutija za roštilj sa motivom mesa, dimenzije 30x20x5cm.\",\n  \"price\": 45.00,\n  \"dimensions\": \"30x20x5cm\",\n  \"imageUrl\": \"/uploads/IMG_1062.JPG\",\n  \"stock\": 500,\n  \"available\": true,\n  \"createdAt\": \"2026-05-26T13:44:35\",\n  \"categoryId\": 1,\n  \"categoryName\": \"Kutije za roštilj\"\n}"
+          }]
+        },
+        {
+          "name": "CREATE Product (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Nova kutija za kolace\",\n  \"description\": \"Test proizvod\",\n  \"price\": 99.99,\n  \"dimensions\": \"15x15x5cm\",\n  \"imageUrl\": \"/uploads/IMG_1070.JPG\",\n  \"stock\": 100,\n  \"available\": true,\n  \"categoryId\": 3\n}" },
+            "url": { "raw": "{{base_url}}/api/products", "host": ["{{base_url}}"], "path": ["api","products"] }
+          }
+        },
+        {
+          "name": "UPDATE Product (ADMIN)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Kartonska kutija za roštilj - velika (Jonas) - sa popustom\",\n  \"description\": \"Akcija!\",\n  \"price\": 40.00,\n  \"dimensions\": \"30x20x5cm\",\n  \"imageUrl\": \"/uploads/IMG_1062.JPG\",\n  \"stock\": 500,\n  \"available\": true,\n  \"categoryId\": 1\n}" },
+            "url": { "raw": "{{base_url}}/api/products/1", "host": ["{{base_url}}"], "path": ["api","products","1"] }
+          }
+        },
+        {
+          "name": "DELETE Product (ADMIN)",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/api/products/14", "host": ["{{base_url}}"], "path": ["api","products","14"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "CREATE Order (USER)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"deliveryType\": \"DOSTAVA_NA_ADRESU\",\n  \"deliveryAddress\": \"Knez Mihailova 1, Beograd\",\n  \"contactPhone\": \"064/123-456\",\n  \"note\": \"Molim hitno isporučiti\",\n  \"items\": [\n    { \"productId\": 1, \"quantity\": 10 },\n    { \"productId\": 3, \"quantity\": 50 }\n  ]\n}" },
+            "url": { "raw": "{{base_url}}/api/orders", "host": ["{{base_url}}"], "path": ["api","orders"] }
+          },
+          "response": [{
+            "name": "201 Created",
+            "originalRequest": {
+              "method": "POST",
+              "header": [{ "key": "Content-Type", "value": "application/json" }],
+              "body": { "mode": "raw", "raw": "{\"deliveryType\":\"DOSTAVA_NA_ADRESU\",\"deliveryAddress\":\"Knez Mihailova 1, Beograd\",\"contactPhone\":\"064/123-456\",\"items\":[{\"productId\":1,\"quantity\":10},{\"productId\":3,\"quantity\":50}]}" },
+              "url": { "raw": "{{base_url}}/api/orders", "host": ["{{base_url}}"], "path": ["api","orders"] }
+            },
+            "status": "Created",
+            "code": 201,
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": "{\n  \"id\": 1,\n  \"orderDate\": \"2026-05-26T13:50:00\",\n  \"status\": \"PRIMLJENA\",\n  \"deliveryType\": \"DOSTAVA_NA_ADRESU\",\n  \"deliveryAddress\": \"Knez Mihailova 1, Beograd\",\n  \"contactPhone\": \"064/123-456\",\n  \"note\": \"Molim hitno isporučiti\",\n  \"totalPrice\": 1850.00,\n  \"userId\": 2,\n  \"username\": \"kupac\",\n  \"userFullName\": \"Petar Petrovic\",\n  \"items\": [\n    {\"id\":1,\"productId\":1,\"productName\":\"Kartonska kutija za roštilj - velika (Jonas)\",\"quantity\":10,\"unitPrice\":45.00,\"totalPrice\":450.00},\n    {\"id\":2,\"productId\":3,\"productName\":\"Srebrna kutija za pomfrit/hranu\",\"quantity\":50,\"unitPrice\":28.00,\"totalPrice\":1400.00}\n  ]\n}"
+          }]
+        },
+        {
+          "name": "GET My Orders (USER)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/orders/my", "host": ["{{base_url}}"], "path": ["api","orders","my"] }
+          }
+        },
+        {
+          "name": "GET All Orders (ADMIN)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/orders", "host": ["{{base_url}}"], "path": ["api","orders"] }
+          }
+        },
+        {
+          "name": "GET Order by ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/orders/1", "host": ["{{base_url}}"], "path": ["api","orders","1"] }
+          }
+        },
+        {
+          "name": "UPDATE Order Status (ADMIN)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"U_IZRADI\"\n}" },
+            "url": { "raw": "{{base_url}}/api/orders/1/status", "host": ["{{base_url}}"], "path": ["api","orders","1","status"] }
+          }
+        },
+        {
+          "name": "DELETE Order (ADMIN)",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/api/orders/1", "host": ["{{base_url}}"], "path": ["api","orders","1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Blog",
+      "item": [
+        {
+          "name": "GET All Blog Posts (PUBLIC)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/blog", "host": ["{{base_url}}"], "path": ["api","blog"] }
+          },
+          "response": [{
+            "name": "200 OK",
+            "originalRequest": {
+              "method": "GET",
+              "url": { "raw": "{{base_url}}/api/blog", "host": ["{{base_url}}"], "path": ["api","blog"] }
+            },
+            "status": "OK",
+            "code": 200,
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": "[\n  {\"id\":3,\"title\":\"Načini dostave – sada i kurirska služba\",\"content\":\"Pored ličnog preuzimanja...\",\"imageUrl\":null,\"createdAt\":\"2026-05-26T13:44:35\",\"updatedAt\":\"2026-05-26T13:44:35\",\"authorId\":1,\"authorUsername\":\"admin\",\"authorFullName\":\"Vlasnik Stamparije\"},\n  {\"id\":2,\"title\":\"Nova ponuda kutija za kolače\",\"content\":\"Sa zadovoljstvom predstavljamo...\",\"imageUrl\":\"/uploads/IMG_1070.JPG\",\"createdAt\":\"2026-05-26T13:44:35\",\"authorId\":1,\"authorUsername\":\"admin\"}\n]"
+          }]
+        },
+        {
+          "name": "GET Blog Post by ID",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/blog/1", "host": ["{{base_url}}"], "path": ["api","blog","1"] }
+          }
+        },
+        {
+          "name": "CREATE Blog Post (ADMIN)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Letnja akcija - 15% popusta na sve kutije za rostilj!\",\n  \"content\": \"Tokom celog jula i avgusta imamo posebnu akciju za nase kupce. Sve kartonske kutije za rostilj sa popustom od 15%. Pozurite, akcija traje do isteka zaliha!\",\n  \"imageUrl\": \"/uploads/IMG_1062.JPG\"\n}" },
+            "url": { "raw": "{{base_url}}/api/blog", "host": ["{{base_url}}"], "path": ["api","blog"] }
+          }
+        },
+        {
+          "name": "UPDATE Blog Post (ADMIN)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Azurirani naslov\",\n  \"content\": \"Azurirani sadrzaj objave.\",\n  \"imageUrl\": \"/uploads/IMG_1070.JPG\"\n}" },
+            "url": { "raw": "{{base_url}}/api/blog/1", "host": ["{{base_url}}"], "path": ["api","blog","1"] }
+          }
+        },
+        {
+          "name": "DELETE Blog Post (ADMIN)",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/api/blog/3", "host": ["{{base_url}}"], "path": ["api","blog","3"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users (ADMIN only)",
+      "item": [
+        {
+          "name": "GET All Users (ADMIN)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/users", "host": ["{{base_url}}"], "path": ["api","users"] }
+          },
+          "response": [{
+            "name": "200 OK",
+            "originalRequest": {
+              "method": "GET",
+              "url": { "raw": "{{base_url}}/api/users", "host": ["{{base_url}}"], "path": ["api","users"] }
+            },
+            "status": "OK",
+            "code": 200,
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": "[\n  {\"id\":1,\"username\":\"admin\",\"email\":\"admin@meningsistem.rs\",\"firstName\":\"Vlasnik\",\"lastName\":\"Stamparije\",\"phone\":\"026/123-456\",\"address\":\"Smederevo\",\"createdAt\":\"2026-05-26T13:44:34\",\"enabled\":true,\"roles\":[\"ROLE_ADMIN\",\"ROLE_USER\"]},\n  {\"id\":2,\"username\":\"kupac\",\"email\":\"kupac@example.com\",\"firstName\":\"Petar\",\"lastName\":\"Petrovic\",\"phone\":\"064/123-456\",\"address\":\"Beograd, Knez Mihailova 1\",\"createdAt\":\"2026-05-26T13:44:34\",\"enabled\":true,\"roles\":[\"ROLE_USER\"]}\n]"
+          }]
+        },
+        {
+          "name": "GET User by ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/api/users/2", "host": ["{{base_url}}"], "path": ["api","users","2"] }
+          }
+        },
+        {
+          "name": "Set User Enabled",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"enabled\": false\n}" },
+            "url": { "raw": "{{base_url}}/api/users/2/enabled", "host": ["{{base_url}}"], "path": ["api","users","2","enabled"] }
+          }
+        },
+        {
+          "name": "DELETE User",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/api/users/3", "host": ["{{base_url}}"], "path": ["api","users","3"] }
+          }
+        }
+      ]
+    }
+  ]
+}

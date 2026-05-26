@@ -1,0 +1,57 @@
+# Java / Maven
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+backend/HELP.md
+backend/backend_run.log
+*.class
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+replay_pid*
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node / React
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/frontend_run.log
+frontend/.vite/
+frontend/*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Logs
+*.log
+logs/
+
+# Spring Boot
+backend/.gradle/
+backend/build/
+backend/out/
+
+# Env files
+.env
+.env.local
+.env.*.local

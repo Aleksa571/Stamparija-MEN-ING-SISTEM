@@ -1,0 +1,194 @@
+:root {
+  --brand-primary: #b8860b;
+  --brand-primary-dark: #8b6508;
+  --brand-secondary: #2c2c2c;
+  --brand-accent: #c9a227;
+  --brand-bg: #faf7f2;
+  --brand-text: #2c2c2c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, "Helvetica Neue", sans-serif;
+  background-color: var(--brand-bg);
+  color: var(--brand-text);
+}
+
+.btn-brand {
+  background-color: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: white;
+}
+.btn-brand:hover,
+.btn-brand:focus {
+  background-color: var(--brand-primary-dark);
+  border-color: var(--brand-primary-dark);
+  color: white;
+}
+.btn-outline-brand {
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+}
+.btn-outline-brand:hover {
+  background-color: var(--brand-primary);
+  color: white;
+}
+
+.text-brand { color: var(--brand-primary); }
+.bg-brand { background-color: var(--brand-primary); }
+.border-brand { border-color: var(--brand-primary) !important; }
+
+.navbar-brand-custom {
+  background-color: var(--brand-secondary);
+}
+.navbar-brand-custom .nav-link {
+  color: rgba(255, 255, 255, 0.85) !important;
+  transition: color 0.2s;
+}
+.navbar-brand-custom .nav-link:hover {
+  color: var(--brand-accent) !important;
+}
+.navbar-brand-custom .navbar-brand {
+  color: white !important;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.hero {
+  background: linear-gradient(135deg, rgba(44, 44, 44, 0.85), rgba(184, 134, 11, 0.7)),
+    url('/uploads/IMG_1062.JPG') center/cover no-repeat;
+  color: white;
+  padding: 6rem 0 5rem;
+  text-align: center;
+}
+.hero h1 {
+  font-weight: 800;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.hero p.lead {
+  font-size: 1.25rem;
+  opacity: 0.95;
+}
+
+.card-product {
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%;
+}
+.card-product:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+.card-product .card-img-top {
+  height: 220px;
+  object-fit: cover;
+}
+
+.card-category {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+  min-height: 220px;
+  transition: transform 0.2s;
+}
+.card-category:hover {
+  transform: scale(1.02);
+}
+.card-category img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0; left: 0;
+}
+.card-category .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.1));
+  display: flex;
+  align-items: flex-end;
+  padding: 1.5rem;
+  color: white;
+}
+
+.section-title {
+  font-weight: 800;
+  margin-bottom: 2rem;
+  position: relative;
+  display: inline-block;
+}
+.section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background-color: var(--brand-primary);
+  margin-top: 8px;
+}
+
+footer.site-footer {
+  background-color: var(--brand-secondary);
+  color: rgba(255, 255, 255, 0.85);
+  padding: 3rem 0 1.5rem;
+  margin-top: 5rem;
+}
+footer.site-footer a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+}
+footer.site-footer a:hover {
+  color: var(--brand-accent);
+}
+
+.feature-strip {
+  background-color: var(--brand-secondary);
+  color: white;
+  padding: 1.5rem 0;
+}
+.feature-strip .feature-item {
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.feature-strip i {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+  color: var(--brand-accent);
+}
+
+.product-detail-image {
+  width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+}
+
+.admin-sidebar {
+  min-height: calc(100vh - 56px);
+  background-color: var(--brand-secondary);
+  padding: 1.5rem 0;
+}
+.admin-sidebar .nav-link {
+  color: rgba(255, 255, 255, 0.85);
+  padding: 0.75rem 1.5rem;
+  border-left: 3px solid transparent;
+}
+.admin-sidebar .nav-link:hover,
+.admin-sidebar .nav-link.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-left-color: var(--brand-accent);
+}
+
+.toast-container-custom {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 9999;
+}
