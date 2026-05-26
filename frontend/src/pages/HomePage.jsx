@@ -30,7 +30,7 @@ const HomePage = () => {
           <p className="lead mb-2">Štamparija sa tradicijom u Smederevu</p>
           <p className="mb-4 opacity-90">
             Kartonska ambalaža, ofset štampa, blokovska roba.<br/>
-            Od 12 štamparija u gradu, ostale smo 2 – nije slučajno.
+            Od 12 štamparija u gradu, ostale su samo 2 – nije slučajno.
           </p>
           <div>
             <Button as={Link} to="/proizvodi" className="btn-brand btn-lg me-2">

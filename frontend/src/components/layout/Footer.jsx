@@ -12,7 +12,7 @@ const Footer = () => (
           </h5>
           <p className="mb-1">Štamparija sa tradicijom u Smederevu.</p>
           <p className="mb-1">Specijalizovani za kartonsku ambalažu, ofset i digitalnu štampu.</p>
-          <p className="small mt-3 mb-0 opacity-75">Od 12 štamparija u gradu, ostale smo 2 – jedna od njih smo mi.</p>
+          <p className="small mt-3 mb-0 opacity-75">Od 12 štamparija u gradu, ostale su samo 2 – jedna od njih smo mi.</p>
         </Col>
         <Col md={4}>
           <h6 className="text-white fw-bold mb-3">Ponuda</h6>
