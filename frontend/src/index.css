@@ -11,11 +11,24 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, "Helvetica Neue", sans-serif;
   background-color: var(--brand-bg);
   color: var(--brand-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
 
 .btn-brand {
@@ -44,10 +57,11 @@ body {
 
 .navbar-brand-custom {
   background-color: var(--brand-secondary);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
 }
 .navbar-brand-custom .nav-link {
   color: rgba(255, 255, 255, 0.85) !important;
-  transition: color 0.2s;
+  transition: color 0.25s ease;
 }
 .navbar-brand-custom .nav-link:hover {
   color: var(--brand-accent) !important;
@@ -56,6 +70,43 @@ body {
   color: white !important;
   font-weight: 700;
   letter-spacing: 0.5px;
+}
+
+.nav-item-wrap {
+  display: inline-flex;
+}
+.nav-link-animated {
+  position: relative;
+  padding: 0.5rem 0.85rem !important;
+}
+.nav-link-animated::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  width: calc(100% - 1.7rem);
+  height: 2px;
+  background-color: var(--brand-accent);
+  transition: transform 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+  border-radius: 2px;
+}
+.nav-link-animated:hover::after,
+.nav-link-animated.active::after {
+  transform: translateX(-50%) scaleX(1);
+}
+.nav-link-animated.active {
+  color: var(--brand-accent) !important;
+}
+
+@media (max-width: 991.98px) {
+  .nav-link-animated::after {
+    display: none;
+  }
+  .nav-item-wrap {
+    display: block;
+  }
 }
 
 .hero {
@@ -191,4 +242,43 @@ footer.site-footer a:hover {
   top: 80px;
   right: 20px;
   z-index: 9999;
+}
+
+.scroll-to-top-btn {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--brand-primary);
+  color: white;
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(184, 134, 11, 0.45);
+  cursor: pointer;
+  z-index: 1040;
+}
+.scroll-to-top-btn:hover {
+  background-color: var(--brand-primary-dark);
+}
+.scroll-to-top-btn:focus-visible {
+  outline: 3px solid var(--brand-accent);
+  outline-offset: 2px;
+}
+.scroll-to-top-btn i {
+  line-height: 1;
+}
+
+@media (max-width: 575.98px) {
+  .scroll-to-top-btn {
+    right: 16px;
+    bottom: 16px;
+    width: 42px;
+    height: 42px;
+    font-size: 1.15rem;
+  }
 }

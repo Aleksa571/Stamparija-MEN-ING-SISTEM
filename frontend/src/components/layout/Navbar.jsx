@@ -1,6 +1,30 @@
 import { Container, Nav, Navbar as BsNavbar, NavDropdown } from 'react-bootstrap';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext.jsx';
+
+const navItems = [
+  { to: '/', label: 'Početna', end: true },
+  { to: '/kategorije', label: 'Kategorije' },
+  { to: '/proizvodi', label: 'Proizvodi' },
+  { to: '/blog', label: 'Blog' },
+  { to: '/o-nama', label: 'O nama' },
+  { to: '/kontakt', label: 'Kontakt' },
+];
+
+const AnimatedNavLink = ({ to, label, end = false, icon }) => (
+  <motion.div
+    className="nav-item-wrap"
+    whileHover={{ y: -2 }}
+    whileTap={{ scale: 0.94 }}
+    transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+  >
+    <Nav.Link as={NavLink} to={to} end={end} className="nav-link-animated">
+      {icon && <i className={`bi ${icon} me-1`}></i>}
+      <span>{label}</span>
+    </Nav.Link>
+  </motion.div>
+);
 
 const Navbar = () => {
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
@@ -14,28 +38,27 @@ const Navbar = () => {
   return (
     <BsNavbar expand="lg" className="navbar-brand-custom" variant="dark" sticky="top">
       <Container>
-        <BsNavbar.Brand as={Link} to="/">
-          <i className="bi bi-printer-fill me-2"></i>
-          MEN-ING SISTEM
-        </BsNavbar.Brand>
+        <motion.div
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.97 }}
+          transition={{ type: 'spring', stiffness: 350, damping: 20 }}
+        >
+          <BsNavbar.Brand as={Link} to="/">
+            <i className="bi bi-printer-fill me-2"></i>
+            MEN-ING SISTEM
+          </BsNavbar.Brand>
+        </motion.div>
         <BsNavbar.Toggle aria-controls="main-nav" />
         <BsNavbar.Collapse id="main-nav">
           <Nav className="me-auto">
-            <Nav.Link as={NavLink} to="/" end>Početna</Nav.Link>
-            <Nav.Link as={NavLink} to="/kategorije">Kategorije</Nav.Link>
-            <Nav.Link as={NavLink} to="/proizvodi">Proizvodi</Nav.Link>
-            <Nav.Link as={NavLink} to="/blog">Blog</Nav.Link>
-            <Nav.Link as={NavLink} to="/o-nama">O nama</Nav.Link>
-            <Nav.Link as={NavLink} to="/kontakt">Kontakt</Nav.Link>
+            {navItems.map((item) => (
+              <AnimatedNavLink key={item.to} {...item} />
+            ))}
           </Nav>
           <Nav>
             {isAuthenticated ? (
               <>
-                {isAdmin && (
-                  <Nav.Link as={NavLink} to="/admin">
-                    <i className="bi bi-shield-lock-fill me-1"></i>Admin
-                  </Nav.Link>
-                )}
+                {isAdmin && <AnimatedNavLink to="/admin" label="Admin" icon="bi-shield-lock-fill" />}
                 <NavDropdown
                   title={
                     <span>
@@ -57,12 +80,8 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Nav.Link as={NavLink} to="/prijava">
-                  <i className="bi bi-box-arrow-in-right me-1"></i>Prijava
-                </Nav.Link>
-                <Nav.Link as={NavLink} to="/registracija">
-                  <i className="bi bi-person-plus me-1"></i>Registracija
-                </Nav.Link>
+                <AnimatedNavLink to="/prijava" label="Prijava" icon="bi-box-arrow-in-right" />
+                <AnimatedNavLink to="/registracija" label="Registracija" icon="bi-person-plus" />
               </>
             )}
           </Nav>
