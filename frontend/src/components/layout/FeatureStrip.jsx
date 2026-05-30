@@ -11,7 +11,7 @@ const FeatureStrip = () => (
           <i className="bi bi-award"></i>Vrhunski kvalitet
         </Col>
         <Col md={3} sm={6} className="feature-item">
-          <i className="bi bi-clock-history"></i>Tradicija od decenija
+          <i className="bi bi-clock-history"></i>Tradicija stara deceniju
         </Col>
         <Col md={3} sm={6} className="feature-item">
           <i className="bi bi-currency-dollar"></i>Konkurentne cene

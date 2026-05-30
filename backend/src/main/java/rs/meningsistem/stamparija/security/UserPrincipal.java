@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import rs.meningsistem.stamparija.model.User;
+import rs.meningsistem.stamparija.entities.User;
 
 import java.util.Collection;
 import java.util.stream.Collectors;

@@ -6,14 +6,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import rs.meningsistem.stamparija.model.User;
-import rs.meningsistem.stamparija.repository.UserRepository;
+import rs.meningsistem.stamparija.entities.User;
+import rs.meningsistem.stamparija.repositories.IUserRepository;
 
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final IUserRepository userRepository;
 
     @Override
     @Transactional(readOnly = true)
